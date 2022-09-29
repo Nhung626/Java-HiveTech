@@ -67,7 +67,7 @@ public class BtStr1 {
         }
         //1.91
         if(str2.length()>8){
-            System.out.println(str2.substring(2, 8)); 
+            System.out.println(str2.substring(1, 7)); 
         }
         
     }
