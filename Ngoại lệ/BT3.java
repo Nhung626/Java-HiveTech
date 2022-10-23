@@ -12,7 +12,7 @@ public class BT3 {
                 sum+= Integer.parseInt(arr[i]);
 
             }catch (NumberFormatException e){
-                System.out.println("Khong phai la so");
+                System.out.printf("%s khong phai la so\n", arr[i]);
             }
             catch (SumCalcException e){
                 System.out.println("Loi");
