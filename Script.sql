@@ -183,13 +183,35 @@ limit 10;
 -- 33.liệt kê 5 sản phẩm bị Cancelled nhất
 
 -- 34.liệt kê 5 sản phâm được giao hàng sớm nhất trong năm 2004
-
+select p.*
+from products p 
+inner join orderdetails o using (productCode)
+inner join orders o2 using (orderNumber)
+order by o2.shippedDate
+limit 5;
 -- 35.tính tổng số tiền đã được thanh toán theo từng KH có payment trong năm 2004
-
+select c.customerNumber , c.customerName, sum(p.amount) as totalAmount  
+from customers c
+inner join payments p using (customerNumber)
+group by c.customerNumber;
 -- 36.tìm 2 employees bị báo cáo nhiều nhất
-
+select e.employeeNumber, concat(e.firstName,' ',e.lastName) as fullName, count(e.employeeNumber) as count_reports
+from employees e 
+inner join employees e2 on e.employeeNumber = e2.reportsTo
+group by e.employeeNumber 
+order by count(e.employeeNumber) desc 
+limit 2;
 -- 37.tìm 2 product ko được đặt hàng trong năm 2005
-
+select p.*
+from products p 
+left join orderdetails o using (productCode)
+left join orders o2 using (orderNumber)
+where o2.orderDate not between '2005-01-01' and '2005-12-31'
+limit 2;
 -- 38.top 10 oder được ship tính từ thời gian orderDate ko quá 3 ngày
-
+select o.orderNumber , o.orderDate , o.shippedDate from orders o
+where datediff(o.shippedDate, o.orderDate) <3;  
 -- 39.tìm 10 oder đả được hoàn thành ship trong tháng 12-2004
+select *  from orders o
+where o.shippedDate between  "2004-12-01" and  "2004-12-31" and o.status = "Shipped"
+limit 10;
